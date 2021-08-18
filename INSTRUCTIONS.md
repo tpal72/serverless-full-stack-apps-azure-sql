@@ -39,6 +39,15 @@ Write-Host $location
 Write-Host "Your server name is:"
 Write-Host $serverName
 
+# storage account
+$storageAccountName = $("storageaccount$($uniqueID)")
+$storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroupName -AccountName $storageAccountName -Location $location -SkuName Standard_GRS
+
+$ctx = $storageAccount.Context
+
+$containerName = "bus"
+New-AzStorageContainer -Name $containerName -Context $ctx -Permission blob
+
 # Create a new server with a system wide unique server name
 $server = New-AzSqlServer -ResourceGroupName $resourceGroupName `
     -ServerName $serverName `
@@ -70,3 +79,17 @@ Write-Host "Database deployed."
 # DB CONNECTION STRING
 Server=bus-server854676.database.windows.net,1433;Initial Catalog=bus-db;User Id=dbadmin;Password=dbpassword01!;Connection Timeout=30;
 
+# GITHUB TOKEN
+vscode://vscode.github-authentication/did-authenticate?windowid=1&code=9bdaa6760fcd9344e24f&state=8ae6e916-c543-40cf-8c3c-62fbbdddcea2
+
+- Copy the token.
+- Switch back to VS code.
+- Click Signing in to github.com... in the status bar.
+- Paste the token and hit enter.
+
+# Azure function name
+$azureFunctionName = $("azfunc$($uniqueID)")
+
+$functionApp = New-AzFunctionApp -Name $azureFunctionName `
+    -ResourceGroupName $resourceGroupName -StorageAccount $storageAccountName `
+    -FunctionsVersion 3 -RuntimeVersion 3 -Runtime dotnet -Location $location
