@@ -1,7 +1,10 @@
 {
-    "liveServer.settings.proxy": {
-        "enable": true,
-        "baseUri": "/api",
-        "proxyUri": "http://localhost:7071/api"
-    }
+  "liveServer.settings.proxy": {
+    "enable": true,
+    "baseUri": "/api",
+    "proxyUri": "http://localhost:7071/api"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  }
 }
